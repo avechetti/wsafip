@@ -1,0 +1,21 @@
+/**
+ * Service.java
+ *
+ * This file was auto-generated from WSDL
+ * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
+ */
+
+package coop.guenoa.afip.wsfexv1;
+
+public interface IService extends javax.xml.rpc.Service {
+
+	/**
+	 * Web Service orientado al servicio de autorizacion de comprobantes de
+	 * Exportacion electronicos
+	 */
+	public java.lang.String getServiceSoapAddress();
+
+	public coop.guenoa.afip.wsfexv1.IServiceSoap getServiceSoap() throws javax.xml.rpc.ServiceException;
+
+	public coop.guenoa.afip.wsfexv1.IServiceSoap getServiceSoap(java.net.URL portAddress) throws javax.xml.rpc.ServiceException;
+}

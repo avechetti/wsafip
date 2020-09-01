@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jardesc>
+    <jar path="/home/ariel/Documentos/Proyectos/afip/jar/wsafip.jar"/>
+    <options buildIfNeeded="true" compress="false" descriptionLocation="/wsafip/built-jar.jardesc" exportErrors="false" exportWarnings="true" includeDirectoryEntries="true" overwrite="true" saveDescription="true" storeRefactorings="true" useSourceFolders="false"/>
+    <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+    <selectedProjects/>
+    <manifest generateManifest="true" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
+        <sealing sealJar="false">
+            <packagesToSeal/>
+            <packagesToUnSeal/>
+        </sealing>
+    </manifest>
+    <selectedElements exportClassFiles="true" exportJavaFiles="true" exportOutputFolder="false">
+        <folder path="/wsafip/lib"/>
+        <javaElement handleIdentifier="=wsafip/src"/>
+        <folder path="/wsafip/certs"/>
+        <file path="/wsafip/wsafip.properties"/>
+        <file path="/wsafip/XmlRequest.xml"/>
+        <file path="/wsafip/README"/>
+        <file path="/wsafip/XmlResponse.xml"/>
+    </selectedElements>
+</jardesc>
