@@ -7,6 +7,8 @@
 
 package coop.guenoa.afip.padron.a4;
 
+import javax.xml.namespace.QName;
+
 public class Telefono  implements java.io.Serializable {
     /**
 	 * 
@@ -140,25 +142,25 @@ public class Telefono  implements java.io.Serializable {
         new org.apache.axis.description.TypeDesc(Telefono.class, true);
 
     static {
-        typeDesc.setXmlType(new javax.xml.namespace.QName("http://a4.soap.ws.server.puc.sr/", "telefono"));
+        typeDesc.setXmlType(new QName("http://a4.soap.ws.server.puc.sr/", "telefono"));
         org.apache.axis.description.ElementDesc elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("numero");
-        elemField.setXmlName(new javax.xml.namespace.QName("", "numero"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "long"));
+        elemField.setXmlName(new QName("", "numero"));
+        elemField.setXmlType(new QName("http://www.w3.org/2001/XMLSchema", "long"));
         elemField.setMinOccurs(0);
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("tipoLinea");
-        elemField.setXmlName(new javax.xml.namespace.QName("", "tipoLinea"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setXmlName(new QName("", "tipoLinea"));
+        elemField.setXmlType(new QName("http://www.w3.org/2001/XMLSchema", "string"));
         elemField.setMinOccurs(0);
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("tipoTelefono");
-        elemField.setXmlName(new javax.xml.namespace.QName("", "tipoTelefono"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setXmlName(new QName("", "tipoTelefono"));
+        elemField.setXmlType(new QName("http://www.w3.org/2001/XMLSchema", "string"));
         elemField.setMinOccurs(0);
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
@@ -177,7 +179,7 @@ public class Telefono  implements java.io.Serializable {
     public static org.apache.axis.encoding.Serializer getSerializer(
            String mechType, 
 			Class<?> _javaType,  
-           javax.xml.namespace.QName _xmlType) {
+           QName _xmlType) {
         return 
           new  org.apache.axis.encoding.ser.BeanSerializer(
             _javaType, _xmlType, typeDesc);
@@ -189,7 +191,7 @@ public class Telefono  implements java.io.Serializable {
     public static org.apache.axis.encoding.Deserializer getDeserializer(
            String mechType, 
            Class<?> _javaType,  
-           javax.xml.namespace.QName _xmlType) {
+           QName _xmlType) {
         return 
           new  org.apache.axis.encoding.ser.BeanDeserializer(
             _javaType, _xmlType, typeDesc);
