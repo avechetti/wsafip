@@ -7,7 +7,14 @@
 
 package coop.guenoa.afip.wsfev1;
 
+import javax.xml.namespace.QName;
+
 public class Opcional implements java.io.Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private java.lang.String id;
 
 	private java.lang.String valor;
@@ -63,8 +70,6 @@ public class Opcional implements java.io.Serializable {
 		if (!(obj instanceof Opcional))
 			return false;
 		Opcional other = (Opcional) obj;
-		if (obj == null)
-			return false;
 		if (this == obj)
 			return true;
 		if (__equalsCalc != null) {
@@ -104,18 +109,18 @@ public class Opcional implements java.io.Serializable {
 			Opcional.class, true);
 
 	static {
-		typeDesc.setXmlType(new javax.xml.namespace.QName("http://ar.gov.afip.dif.FEV1/", "Opcional"));
+		typeDesc.setXmlType(new QName("http://ar.gov.afip.dif.FEV1/", "Opcional"));
 		org.apache.axis.description.ElementDesc elemField = new org.apache.axis.description.ElementDesc();
 		elemField.setFieldName("id");
-		elemField.setXmlName(new javax.xml.namespace.QName("http://ar.gov.afip.dif.FEV1/", "Id"));
-		elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+		elemField.setXmlName(new QName("http://ar.gov.afip.dif.FEV1/", "Id"));
+		elemField.setXmlType(new QName("http://www.w3.org/2001/XMLSchema", "string"));
 		elemField.setMinOccurs(0);
 		elemField.setNillable(false);
 		typeDesc.addFieldDesc(elemField);
 		elemField = new org.apache.axis.description.ElementDesc();
 		elemField.setFieldName("valor");
-		elemField.setXmlName(new javax.xml.namespace.QName("http://ar.gov.afip.dif.FEV1/", "Valor"));
-		elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+		elemField.setXmlName(new QName("http://ar.gov.afip.dif.FEV1/", "Valor"));
+		elemField.setXmlType(new QName("http://www.w3.org/2001/XMLSchema", "string"));
 		elemField.setMinOccurs(0);
 		elemField.setNillable(false);
 		typeDesc.addFieldDesc(elemField);
@@ -132,7 +137,7 @@ public class Opcional implements java.io.Serializable {
 	 * Get Custom Serializer
 	 */
 	public static org.apache.axis.encoding.Serializer getSerializer(java.lang.String mechType,
-			java.lang.Class _javaType, javax.xml.namespace.QName _xmlType) {
+			java.lang.Class _javaType, QName _xmlType) {
 		return new org.apache.axis.encoding.ser.BeanSerializer(_javaType, _xmlType, typeDesc);
 	}
 
@@ -140,7 +145,7 @@ public class Opcional implements java.io.Serializable {
 	 * Get Custom Deserializer
 	 */
 	public static org.apache.axis.encoding.Deserializer getDeserializer(java.lang.String mechType,
-			java.lang.Class _javaType, javax.xml.namespace.QName _xmlType) {
+			java.lang.Class _javaType, QName _xmlType) {
 		return new org.apache.axis.encoding.ser.BeanDeserializer(_javaType, _xmlType, typeDesc);
 	}
 

@@ -7,7 +7,17 @@
 
 package coop.guenoa.afip.wsfev1;
 
+import org.apache.axis.description.ElementDesc;
+import org.apache.axis.description.TypeDesc;
+
 public class DocTipo implements java.io.Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	
+
 	private int id;
 
 	private java.lang.String desc;
@@ -105,8 +115,6 @@ public class DocTipo implements java.io.Serializable {
 		if (!(obj instanceof DocTipo))
 			return false;
 		DocTipo other = (DocTipo) obj;
-		if (obj == null)
-			return false;
 		if (this == obj)
 			return true;
 		if (__equalsCalc != null) {
@@ -149,32 +157,32 @@ public class DocTipo implements java.io.Serializable {
 	}
 
 	// Type metadata
-	private static org.apache.axis.description.TypeDesc typeDesc = new org.apache.axis.description.TypeDesc(
+	private static TypeDesc typeDesc = new TypeDesc(
 			DocTipo.class, true);
 
 	static {
 		typeDesc.setXmlType(new javax.xml.namespace.QName("http://ar.gov.afip.dif.FEV1/", "DocTipo"));
-		org.apache.axis.description.ElementDesc elemField = new org.apache.axis.description.ElementDesc();
+		ElementDesc elemField = new ElementDesc();
 		elemField.setFieldName("id");
 		elemField.setXmlName(new javax.xml.namespace.QName("http://ar.gov.afip.dif.FEV1/", "Id"));
 		elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"));
 		elemField.setNillable(false);
 		typeDesc.addFieldDesc(elemField);
-		elemField = new org.apache.axis.description.ElementDesc();
+		elemField = new ElementDesc();
 		elemField.setFieldName("desc");
 		elemField.setXmlName(new javax.xml.namespace.QName("http://ar.gov.afip.dif.FEV1/", "Desc"));
 		elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
 		elemField.setMinOccurs(0);
 		elemField.setNillable(false);
 		typeDesc.addFieldDesc(elemField);
-		elemField = new org.apache.axis.description.ElementDesc();
+		elemField = new ElementDesc();
 		elemField.setFieldName("fchDesde");
 		elemField.setXmlName(new javax.xml.namespace.QName("http://ar.gov.afip.dif.FEV1/", "FchDesde"));
 		elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
 		elemField.setMinOccurs(0);
 		elemField.setNillable(false);
 		typeDesc.addFieldDesc(elemField);
-		elemField = new org.apache.axis.description.ElementDesc();
+		elemField = new ElementDesc();
 		elemField.setFieldName("fchHasta");
 		elemField.setXmlName(new javax.xml.namespace.QName("http://ar.gov.afip.dif.FEV1/", "FchHasta"));
 		elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
@@ -186,7 +194,7 @@ public class DocTipo implements java.io.Serializable {
 	/**
 	 * Return type metadata object
 	 */
-	public static org.apache.axis.description.TypeDesc getTypeDesc() {
+	public static TypeDesc getTypeDesc() {
 		return typeDesc;
 	}
 
