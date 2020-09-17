@@ -1,15 +1,15 @@
 package coop.guenoa.afip.wsfev1;
 
-public class Wsfe_v1 implements IServiceWsfeV1 {
+public class Wsfev1 implements IServiceWsfeV1 {
 	private String _endpoint = null;
 	private IServiceWsfeV1 serviceSoap = null;
 	private Boolean homologacion = true;
 
-	public Wsfe_v1() {
+	public Wsfev1() {
 		this.homologacion = false;
 	}
 
-	public Wsfe_v1(Boolean homologacion) {
+	public Wsfev1(Boolean homologacion) {
 		this.homologacion = homologacion;
 		// _initServiceSoapProxy();
 	}
