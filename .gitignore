@@ -1,0 +1,12 @@
+/loginTicketRequest.xml
+/loginTicketResponse.xml
+/XmlRequest.xml
+/XmlResponse.xml
+/build/
+/dist/
+/bin/
+/.cache/
+/archivo.log
+/nbproject/private/
+/nbbuild/
+/nbdist/

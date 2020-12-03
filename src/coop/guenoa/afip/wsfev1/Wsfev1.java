@@ -1,5 +1,7 @@
 package coop.guenoa.afip.wsfev1;
 
+import java.rmi.RemoteException;
+
 public class Wsfev1 implements IServiceWsfeV1 {
 	private String _endpoint = null;
 	private IServiceWsfeV1 serviceSoap = null;
@@ -54,21 +56,21 @@ public class Wsfev1 implements IServiceWsfeV1 {
 
 	@Override
 	public FECAEResponse FECAESolicitar(FEAuthRequest auth, FECAERequest feCAEReq)
-			throws java.rmi.RemoteException, WsFev1Execepcion {
+			throws RemoteException, WsFev1Execepcion {
 		if (serviceSoap == null)
 			_initServiceSoapProxy();
 		return serviceSoap.FECAESolicitar(auth, feCAEReq);
 	}
 
 	@Override
-	public FERegXReqResponse FECompTotXRequest(FEAuthRequest auth) throws java.rmi.RemoteException {
+	public FERegXReqResponse FECompTotXRequest(FEAuthRequest auth) throws RemoteException {
 		if (serviceSoap == null)
 			_initServiceSoapProxy();
 		return serviceSoap.FECompTotXRequest(auth);
 	}
 
 	@Override
-	public DummyResponse FEDummy() throws java.rmi.RemoteException {
+	public DummyResponse FEDummy() throws RemoteException {
 		if (serviceSoap == null)
 			_initServiceSoapProxy();
 		return serviceSoap.FEDummy();
@@ -76,7 +78,7 @@ public class Wsfev1 implements IServiceWsfeV1 {
 
 	@Override
 	public FERecuperaLastCbteResponse FECompUltimoAutorizado(FEAuthRequest auth, int ptoVta, int cbteTipo)
-			throws java.rmi.RemoteException {
+			throws RemoteException {
 		if (serviceSoap == null)
 			_initServiceSoapProxy();
 		return serviceSoap.FECompUltimoAutorizado(auth, ptoVta, cbteTipo);
@@ -84,7 +86,7 @@ public class Wsfev1 implements IServiceWsfeV1 {
 
 	@Override
 	public FECompConsultaResponse FECompConsultar(FEAuthRequest auth, FECompConsultaReq feCompConsReq)
-			throws java.rmi.RemoteException {
+			throws RemoteException {
 		if (serviceSoap == null)
 			_initServiceSoapProxy();
 		return serviceSoap.FECompConsultar(auth, feCompConsReq);
@@ -92,7 +94,7 @@ public class Wsfev1 implements IServiceWsfeV1 {
 
 	@Override
 	public FECAEAResponse FECAEARegInformativo(FEAuthRequest auth, FECAEARequest feCAEARegInfReq)
-			throws java.rmi.RemoteException {
+			throws RemoteException {
 		if (serviceSoap == null)
 			_initServiceSoapProxy();
 		return serviceSoap.FECAEARegInformativo(auth, feCAEARegInfReq);
@@ -100,7 +102,7 @@ public class Wsfev1 implements IServiceWsfeV1 {
 
 	@Override
 	public FECAEAGetResponse FECAEASolicitar(FEAuthRequest auth, int periodo, short orden)
-			throws java.rmi.RemoteException {
+			throws RemoteException {
 		if (serviceSoap == null)
 			_initServiceSoapProxy();
 		return serviceSoap.FECAEASolicitar(auth, periodo, orden);
@@ -108,7 +110,7 @@ public class Wsfev1 implements IServiceWsfeV1 {
 
 	@Override
 	public FECAEASinMovConsResponse FECAEASinMovimientoConsultar(FEAuthRequest auth, java.lang.String CAEA, int ptoVta)
-			throws java.rmi.RemoteException {
+			throws RemoteException {
 		if (serviceSoap == null)
 			_initServiceSoapProxy();
 		return serviceSoap.FECAEASinMovimientoConsultar(auth, CAEA, ptoVta);
@@ -116,7 +118,7 @@ public class Wsfev1 implements IServiceWsfeV1 {
 
 	@Override
 	public FECAEASinMovResponse FECAEASinMovimientoInformar(FEAuthRequest auth, int ptoVta, java.lang.String CAEA)
-			throws java.rmi.RemoteException {
+			throws RemoteException {
 		if (serviceSoap == null)
 			_initServiceSoapProxy();
 		return serviceSoap.FECAEASinMovimientoInformar(auth, ptoVta, CAEA);
@@ -124,7 +126,7 @@ public class Wsfev1 implements IServiceWsfeV1 {
 
 	@Override
 	public FECAEAGetResponse FECAEAConsultar(FEAuthRequest auth, int periodo, short orden)
-			throws java.rmi.RemoteException {
+			throws RemoteException {
 		if (serviceSoap == null)
 			_initServiceSoapProxy();
 		return serviceSoap.FECAEAConsultar(auth, periodo, orden);
@@ -132,70 +134,70 @@ public class Wsfev1 implements IServiceWsfeV1 {
 
 	@Override
 	public FECotizacionResponse FEParamGetCotizacion(FEAuthRequest auth, java.lang.String monId)
-			throws java.rmi.RemoteException {
+			throws RemoteException {
 		if (serviceSoap == null)
 			_initServiceSoapProxy();
 		return serviceSoap.FEParamGetCotizacion(auth, monId);
 	}
 
 	@Override
-	public FETributoResponse FEParamGetTiposTributos(FEAuthRequest auth) throws java.rmi.RemoteException {
+	public FETributoResponse FEParamGetTiposTributos(FEAuthRequest auth) throws RemoteException {
 		if (serviceSoap == null)
 			_initServiceSoapProxy();
 		return serviceSoap.FEParamGetTiposTributos(auth);
 	}
 
 	@Override
-	public MonedaResponse FEParamGetTiposMonedas(FEAuthRequest auth) throws java.rmi.RemoteException {
+	public MonedaResponse FEParamGetTiposMonedas(FEAuthRequest auth) throws RemoteException {
 		if (serviceSoap == null)
 			_initServiceSoapProxy();
 		return serviceSoap.FEParamGetTiposMonedas(auth);
 	}
 
 	@Override
-	public IvaTipoResponse FEParamGetTiposIva(FEAuthRequest auth) throws java.rmi.RemoteException {
+	public IvaTipoResponse FEParamGetTiposIva(FEAuthRequest auth) throws RemoteException {
 		if (serviceSoap == null)
 			_initServiceSoapProxy();
 		return serviceSoap.FEParamGetTiposIva(auth);
 	}
 
 	@Override
-	public OpcionalTipoResponse FEParamGetTiposOpcional(FEAuthRequest auth) throws java.rmi.RemoteException {
+	public OpcionalTipoResponse FEParamGetTiposOpcional(FEAuthRequest auth) throws RemoteException {
 		if (serviceSoap == null)
 			_initServiceSoapProxy();
 		return serviceSoap.FEParamGetTiposOpcional(auth);
 	}
 
 	@Override
-	public ConceptoTipoResponse FEParamGetTiposConcepto(FEAuthRequest auth) throws java.rmi.RemoteException {
+	public ConceptoTipoResponse FEParamGetTiposConcepto(FEAuthRequest auth) throws RemoteException {
 		if (serviceSoap == null)
 			_initServiceSoapProxy();
 		return serviceSoap.FEParamGetTiposConcepto(auth);
 	}
 
 	@Override
-	public FEPtoVentaResponse FEParamGetPtosVenta(FEAuthRequest auth) throws java.rmi.RemoteException {
+	public FEPtoVentaResponse FEParamGetPtosVenta(FEAuthRequest auth) throws RemoteException {
 		if (serviceSoap == null)
 			_initServiceSoapProxy();
 		return serviceSoap.FEParamGetPtosVenta(auth);
 	}
 
 	@Override
-	public CbteTipoResponse FEParamGetTiposCbte(FEAuthRequest auth) throws java.rmi.RemoteException {
+	public CbteTipoResponse FEParamGetTiposCbte(FEAuthRequest auth) throws RemoteException {
 		if (serviceSoap == null)
 			_initServiceSoapProxy();
 		return serviceSoap.FEParamGetTiposCbte(auth);
 	}
 
 	@Override
-	public DocTipoResponse FEParamGetTiposDoc(FEAuthRequest auth) throws java.rmi.RemoteException {
+	public DocTipoResponse FEParamGetTiposDoc(FEAuthRequest auth) throws RemoteException {
 		if (serviceSoap == null)
 			_initServiceSoapProxy();
 		return serviceSoap.FEParamGetTiposDoc(auth);
 	}
 
 	@Override
-	public FEPaisResponse FEParamGetTiposPaises(FEAuthRequest auth) throws java.rmi.RemoteException {
+	public FEPaisResponse FEParamGetTiposPaises(FEAuthRequest auth) throws RemoteException {
 		if (serviceSoap == null)
 			_initServiceSoapProxy();
 		return serviceSoap.FEParamGetTiposPaises(auth);

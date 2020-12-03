@@ -1,11 +1,7 @@
 package coop.guenoa.afip.wsfev1;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-
 import org.apache.log4j.Logger;
-
-import coop.guenoa.afip.wsaa.Wsaa;
 
 public class WsFev1Execepcion extends Exception {
 

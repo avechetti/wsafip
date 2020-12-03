@@ -4,6 +4,7 @@
 package coop.guenoa.afip.util;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Properties;
 
 /**
@@ -33,8 +34,7 @@ public class Configuracion {
 
 		try {
 			config.load(new FileInputStream("./wsafip.properties"));
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (IOException e) {
 		}
 
 		DSTDN = config.getProperty("dstdn", "cn=wsaahomo,o=afip,c=ar,serialNumber=CUIT 33693450239");

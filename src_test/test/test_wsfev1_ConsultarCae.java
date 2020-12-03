@@ -13,7 +13,7 @@ import coop.guenoa.afip.wsfev1.Evt;
 import coop.guenoa.afip.wsfev1.FEAuthRequest;
 import coop.guenoa.afip.wsfev1.FECompConsultaReq;
 import coop.guenoa.afip.wsfev1.FECompConsultaResponse;
-import coop.guenoa.afip.wsfev1.Wsfe_v1;
+import coop.guenoa.afip.wsfev1.Wsfev1;
 
 public class test_wsfev1_ConsultarCae {
 
@@ -21,7 +21,7 @@ public class test_wsfev1_ConsultarCae {
 
 		Debug.debug = true;
 
-		Wsfe_v1 wsfev1 = new Wsfe_v1(true);
+		Wsfev1 wsfev1 = new Wsfev1(true);
 
 		DummyResponse response = wsfev1.FEDummy();
 		System.out.println("App Server: " + response.getAppServer());

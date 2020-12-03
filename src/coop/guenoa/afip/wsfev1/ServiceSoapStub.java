@@ -16,6 +16,7 @@ import org.apache.axis.AxisEngine;
 import org.apache.axis.AxisFault;
 import org.apache.axis.NoEndPointException;
 import org.apache.axis.client.Call;
+import org.apache.axis.client.Stub;
 import org.apache.axis.encoding.ser.ArrayDeserializerFactory;
 import org.apache.axis.encoding.ser.ArraySerializerFactory;
 import org.apache.axis.encoding.ser.BeanDeserializerFactory;
@@ -31,7 +32,7 @@ import org.apache.axis.utils.JavaUtils;
 
 import coop.guenoa.afip.util.Debug;
 
-public class ServiceSoapStub extends org.apache.axis.client.Stub implements IServiceWsfeV1 {
+public class ServiceSoapStub extends Stub implements IServiceWsfeV1 {
 	private java.util.Vector<Class> cachedSerClasses = new java.util.Vector<Class>();
 	private java.util.Vector<QName> cachedSerQNames = new java.util.Vector<QName>();
 	private java.util.Vector<Serializable> cachedSerFactories = new java.util.Vector<Serializable>();
@@ -1130,7 +1131,7 @@ public class ServiceSoapStub extends org.apache.axis.client.Stub implements ISer
 		if (super.cachedEndpoint == null) {
 			throw new org.apache.axis.NoEndPointException();
 		}
-		org.apache.axis.client.Call _call = createCall();
+		Call _call = createCall();
 		_call.setOperation(_operations[0]);
 		_call.setUseSOAPAction(true);
 		_call.setSOAPActionURI("http://ar.gov.afip.dif.FEV1/FECAESolicitar");
@@ -1144,7 +1145,7 @@ public class ServiceSoapStub extends org.apache.axis.client.Stub implements ISer
 		setAttachments(_call);
 
 		try {
-			java.lang.Object _resp = _call.invoke(new java.lang.Object[] { auth, feCAEReq });
+			Object _resp = _call.invoke(new Object[] { auth, feCAEReq });
 
 			Debug.guardarArchivosXml(_call);
 
@@ -1154,7 +1155,7 @@ public class ServiceSoapStub extends org.apache.axis.client.Stub implements ISer
 				extractAttachments(_call);
 
 				FECAEResponse response = (FECAEResponse) _resp;
-				if (response.getFeCabResp().getResultado().equals("R")) {
+				if (!response.getFeCabResp().getResultado().equals("A")) {
 					throw new WsFev1Execepcion(response);
 				}
 				return response;

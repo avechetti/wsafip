@@ -7,7 +7,10 @@
 
 package coop.guenoa.afip.wsfev1;
 
-public interface IServiceWsfeV1 extends java.rmi.Remote {
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
+public interface IServiceWsfeV1 extends Remote {
 
 	/**
 	 * Solicitud de Código de Autorización Electrónico (CAE)
@@ -15,114 +18,114 @@ public interface IServiceWsfeV1 extends java.rmi.Remote {
 	 * @throws WsFev1Execepcion
 	 */
 	public FECAEResponse FECAESolicitar(FEAuthRequest auth, FECAERequest feCAEReq)
-			throws java.rmi.RemoteException, WsFev1Execepcion;
+			throws RemoteException, WsFev1Execepcion;
 
 	/**
 	 * Retorna la cantidad maxima de registros que puede tener una invocacion al
 	 * metodo FECAESolicitar / FECAEARegInformativo
 	 */
-	public FERegXReqResponse FECompTotXRequest(FEAuthRequest auth) throws java.rmi.RemoteException;
+	public FERegXReqResponse FECompTotXRequest(FEAuthRequest auth) throws RemoteException;
 
 	/**
 	 * Metodo dummy para verificacion de funcionamiento
 	 */
-	public DummyResponse FEDummy() throws java.rmi.RemoteException;
+	public DummyResponse FEDummy() throws RemoteException;
 
 	/**
 	 * Retorna el ultimo comprobante autorizado para el tipo de comprobante / cuit /
 	 * punto de venta ingresado / Tipo de Emisión
 	 */
 	public FERecuperaLastCbteResponse FECompUltimoAutorizado(FEAuthRequest auth, int ptoVta, int cbteTipo)
-			throws java.rmi.RemoteException;
+			throws RemoteException;
 
 	/**
 	 * Consulta Comprobante emitido y su código.
 	 */
 	public FECompConsultaResponse FECompConsultar(FEAuthRequest auth, FECompConsultaReq feCompConsReq)
-			throws java.rmi.RemoteException;
+			throws RemoteException;
 
 	/**
 	 * Rendición de comprobantes asociados a un CAEA.
 	 */
 	public FECAEAResponse FECAEARegInformativo(FEAuthRequest auth, FECAEARequest feCAEARegInfReq)
-			throws java.rmi.RemoteException;
+			throws RemoteException;
 
 	/**
 	 * Solicitud de Código de Autorización Electrónico Anticipado (CAEA)
 	 */
 	public FECAEAGetResponse FECAEASolicitar(FEAuthRequest auth, int periodo, short orden)
-			throws java.rmi.RemoteException;
+			throws RemoteException;
 
 	/**
 	 * Consulta CAEA informado como sin movimientos.
 	 */
 	public FECAEASinMovConsResponse FECAEASinMovimientoConsultar(FEAuthRequest auth, java.lang.String CAEA, int ptoVta)
-			throws java.rmi.RemoteException;
+			throws RemoteException;
 
 	/**
 	 * Informa CAEA sin movimientos.
 	 */
 	public FECAEASinMovResponse FECAEASinMovimientoInformar(FEAuthRequest auth, int ptoVta, java.lang.String CAEA)
-			throws java.rmi.RemoteException;
+			throws RemoteException;
 
 	/**
 	 * Consultar CAEA emitidos.
 	 */
 	public FECAEAGetResponse FECAEAConsultar(FEAuthRequest auth, int periodo, short orden)
-			throws java.rmi.RemoteException;
+			throws RemoteException;
 
 	/**
 	 * Recupera la cotizacion de la moneda consultada y su fecha
 	 */
 	public FECotizacionResponse FEParamGetCotizacion(FEAuthRequest auth, java.lang.String monId)
-			throws java.rmi.RemoteException;
+			throws RemoteException;
 
 	/**
 	 * Recupera el listado de los diferente tributos que pueden ser utilizados en el
 	 * servicio de autorizacion
 	 */
-	public FETributoResponse FEParamGetTiposTributos(FEAuthRequest auth) throws java.rmi.RemoteException;
+	public FETributoResponse FEParamGetTiposTributos(FEAuthRequest auth) throws RemoteException;
 
 	/**
 	 * Recupera el listado de monedas utilizables en servicio de autorización
 	 */
-	public MonedaResponse FEParamGetTiposMonedas(FEAuthRequest auth) throws java.rmi.RemoteException;
+	public MonedaResponse FEParamGetTiposMonedas(FEAuthRequest auth) throws RemoteException;
 
 	/**
 	 * Recupera el listado de Tipos de Iva utilizables en servicio de autorización.
 	 */
-	public IvaTipoResponse FEParamGetTiposIva(FEAuthRequest auth) throws java.rmi.RemoteException;
+	public IvaTipoResponse FEParamGetTiposIva(FEAuthRequest auth) throws RemoteException;
 
 	/**
 	 * Recupera el listado de identificadores para los campos Opcionales
 	 */
-	public OpcionalTipoResponse FEParamGetTiposOpcional(FEAuthRequest auth) throws java.rmi.RemoteException;
+	public OpcionalTipoResponse FEParamGetTiposOpcional(FEAuthRequest auth) throws RemoteException;
 
 	/**
 	 * Recupera el listado de identificadores para el campo Concepto.
 	 */
-	public ConceptoTipoResponse FEParamGetTiposConcepto(FEAuthRequest auth) throws java.rmi.RemoteException;
+	public ConceptoTipoResponse FEParamGetTiposConcepto(FEAuthRequest auth) throws RemoteException;
 
 	/**
 	 * Recupera el listado de puntos de venta registrados y su estado
 	 */
-	public FEPtoVentaResponse FEParamGetPtosVenta(FEAuthRequest auth) throws java.rmi.RemoteException;
+	public FEPtoVentaResponse FEParamGetPtosVenta(FEAuthRequest auth) throws RemoteException;
 
 	/**
 	 * Recupera el listado de Tipos de Comprobantes utilizables en servicio de
 	 * autorización.
 	 */
-	public CbteTipoResponse FEParamGetTiposCbte(FEAuthRequest auth) throws java.rmi.RemoteException;
+	public CbteTipoResponse FEParamGetTiposCbte(FEAuthRequest auth) throws RemoteException;
 
 	/**
 	 * Recupera el listado de Tipos de Documentos utilizables en servicio de
 	 * autorización.
 	 */
-	public DocTipoResponse FEParamGetTiposDoc(FEAuthRequest auth) throws java.rmi.RemoteException;
+	public DocTipoResponse FEParamGetTiposDoc(FEAuthRequest auth) throws RemoteException;
 
 	/**
 	 * Recupera el listado de los diferente paises que pueden ser utilizados en el
 	 * servicio de autorizacion
 	 */
-	public FEPaisResponse FEParamGetTiposPaises(FEAuthRequest auth) throws java.rmi.RemoteException;
+	public FEPaisResponse FEParamGetTiposPaises(FEAuthRequest auth) throws RemoteException;
 }

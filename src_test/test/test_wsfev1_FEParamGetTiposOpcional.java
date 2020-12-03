@@ -11,7 +11,7 @@ import coop.guenoa.afip.wsfev1.DummyResponse;
 import coop.guenoa.afip.wsfev1.FEAuthRequest;
 import coop.guenoa.afip.wsfev1.OpcionalTipo;
 import coop.guenoa.afip.wsfev1.OpcionalTipoResponse;
-import coop.guenoa.afip.wsfev1.Wsfe_v1;
+import coop.guenoa.afip.wsfev1.Wsfev1;
 
 public class test_wsfev1_FEParamGetTiposOpcional {
 
@@ -19,7 +19,7 @@ public class test_wsfev1_FEParamGetTiposOpcional {
 
 		Debug.debug = true;
 
-		Wsfe_v1 wsfev1 = new Wsfe_v1(true);
+		Wsfev1 wsfev1 = new Wsfev1(true);
 
 		DummyResponse response;
 		try {

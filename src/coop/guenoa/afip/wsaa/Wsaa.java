@@ -84,290 +84,289 @@ import coop.guenoa.afip.util.Configuracion;
 // gp/rg/OF.G. DeSeIn-AFIP
 //
 import coop.guenoa.afip.util.Token;
+import java.util.Arrays;
 
 public class Wsaa {
-	
-	public static String wsfe = "wsfe";
-	public static String ws_sr_padron_a4 = "ws_sr_padron_a4";
-	public static String ws_sr_padron_a5 = "ws_sr_padron_a5";
 
-	
-	private Logger log = Logger.getLogger(Wsaa.class);
+    public static String wsfe = "wsfe";
+    public static String ws_sr_padron_a4 = "ws_sr_padron_a4";
+    public static String ws_sr_padron_a5 = "ws_sr_padron_a5";
 
-	private TicketLogin ticketLogin = null;
+    private final Logger log = Logger.getLogger(Wsaa.class);
 
-	private String service = null;
+    private TicketLogin ticketLogin = null;
 
-	private PrivateKey pKey = null;
+    private String service = null;
 
-	private X509Certificate pCertificate = null;
+    private PrivateKey pKey = null;
 
-	private String filename;
+    private X509Certificate pCertificate = null;
 
-	public Wsaa(String service) {
+    private String filename;
 
-		this.service = service;
-	}
+    public Wsaa(String service) {
 
-	public String getService() {
-		return service;
-	}
+        this.service = service;
+    }
 
-	public void setService(String service) {
-		this.service = service;
-	}
+    public String getService() {
+        return service;
+    }
 
-	public PrivateKey getpKey() {
-		return pKey;
-	}
+    public void setService(String service) {
+        this.service = service;
+    }
 
-	public void setpKey(PrivateKey pKey) {
-		this.pKey = pKey;
-	}
+    public PrivateKey getpKey() {
+        return pKey;
+    }
 
-	public X509Certificate getpCertificate() {
-		return pCertificate;
-	}
+    public void setpKey(PrivateKey pKey) {
+        this.pKey = pKey;
+    }
 
-	public void setpCertificate(X509Certificate pCertificate) {
-		this.pCertificate = pCertificate;
-	}
+    public X509Certificate getpCertificate() {
+        return pCertificate;
+    }
 
-	public TicketLogin getTicketLogin() throws WsaaException {
+    public void setpCertificate(X509Certificate pCertificate) {
+        this.pCertificate = pCertificate;
+    }
 
-		try {
+    public TicketLogin getTicketLogin() throws WsaaException {
 
-			filename = Configuracion.CUIT+"-"+this.service ;
-			
-			buscarTicketAlmacenado();
-			if (ticketLogin == null || !ticketLogin.esVigente()) {
-				log.debug("No existe Certificado vignete");
-				System.out.println("Obtener nuevo Certificado");
-				ObtenerCentificadoAfip();
-			}
+        try {
 
-		} catch (DocumentException | ServiceException | IOException | UnrecoverableKeyException | KeyStoreException
-				| NoSuchAlgorithmException | CertificateException | OperatorCreationException | ParseException
-				| CMSException | InvalidKeyException | NoSuchPaddingException | IllegalBlockSizeException
-				| BadPaddingException e) {
-			log.error("ObtenerCentificadoAfip", e);
+            filename = Configuracion.CUIT + "-" + this.service;
 
-			throw new WsaaException(e);
-		}
+            buscarTicketAlmacenado();
+            if (ticketLogin == null || !ticketLogin.esVigente()) {
+                log.debug("No existe Certificado vignete");
+                System.out.println("Obtener nuevo Certificado");
+                ObtenerCentificadoAfip();
+            }
 
-		return ticketLogin;
-	}
+        } catch (DocumentException | ServiceException | IOException | UnrecoverableKeyException | KeyStoreException
+                | NoSuchAlgorithmException | CertificateException | OperatorCreationException | ParseException
+                | CMSException | InvalidKeyException | NoSuchPaddingException | IllegalBlockSizeException
+                | BadPaddingException e) {
+            log.error("ObtenerCentificadoAfip", e);
 
-	private void loadp12file(String p12file, String p12pass, String signer) throws KeyStoreException,
-			NoSuchAlgorithmException, CertificateException, IOException, UnrecoverableKeyException {
-		//
-		// Manage Keys & Certificates
-		//
-		// Create a keystore using keys from the pkcs#12 p12file
-		KeyStore ks = KeyStore.getInstance("pkcs12");
-		FileInputStream p12stream = new FileInputStream(p12file);
-		ks.load(p12stream, p12pass.toCharArray());
-		p12stream.close();
+            throw new WsaaException(e);
+        }
 
-		// Get Certificate & Private key from KeyStore
-		pKey = (PrivateKey) ks.getKey(signer, p12pass.toCharArray());
+        return ticketLogin;
+    }
 
-		pCertificate = (X509Certificate) ks.getCertificate(signer);
-		String signerDN = pCertificate.getSubjectDN().toString();
-		log.info("DN: " + signerDN);
-	}
+    private void loadp12file(String p12file, String p12pass, String signer) throws KeyStoreException,
+            NoSuchAlgorithmException, CertificateException, IOException, UnrecoverableKeyException {
+        //
+        // Manage Keys & Certificates
+        //
+        // Create a keystore using keys from the pkcs#12 p12file
+        KeyStore ks = KeyStore.getInstance("pkcs12");
+        FileInputStream p12stream = new FileInputStream(p12file);
+        ks.load(p12stream, p12pass.toCharArray());
+        p12stream.close();
 
-	//
-	// Create the CMS Message
-	//
-	private byte[] create_cms(String dstDN, String service, int ticketTime)
-			throws KeyStoreException, NoSuchAlgorithmException, CertificateException, IOException,
-			UnrecoverableKeyException, DocumentException, OperatorCreationException, CMSException {
-		byte[] asn1_cms = null;
-		String loginTicketRequest_xml;
-		String signerDN = null;
+        // Get Certificate & Private key from KeyStore
+        pKey = (PrivateKey) ks.getKey(signer, p12pass.toCharArray());
 
-		// Create a list of Certificates to include in the final CMS
-		ArrayList<X509Certificate> certList = new ArrayList<X509Certificate>();
-		certList.add(pCertificate);
+        pCertificate = (X509Certificate) ks.getCertificate(signer);
+        String signerDN = pCertificate.getSubjectDN().toString();
+        log.info("DN: " + signerDN);
+    }
 
-		Store<?> certs = new JcaCertStore(certList);
+    //
+    // Create the CMS Message
+    //
+    private byte[] create_cms(String dstDN, String service, int ticketTime)
+            throws KeyStoreException, NoSuchAlgorithmException, CertificateException, IOException,
+            UnrecoverableKeyException, DocumentException, OperatorCreationException, CMSException {
+        byte[] asn1_cms = null;
+        String loginTicketRequest_xml;
+        String signerDN = null;
 
-		if (Security.getProvider("BC") == null) {
-			Security.addProvider(new BouncyCastleProvider());
-		}
+        // Create a list of Certificates to include in the final CMS
+        ArrayList<X509Certificate> certList = new ArrayList<>();
+        certList.add(pCertificate);
 
-		signerDN = pCertificate.getSubjectDN().toString();
-		log.info("DN: " + signerDN);
+        Store<?> certs = new JcaCertStore(certList);
 
-		//
-		// Create XML Message
-		//
-		loginTicketRequest_xml = createLoginTicketRequest(signerDN, dstDN, service, ticketTime);
+        if (Security.getProvider("BC") == null) {
+            Security.addProvider(new BouncyCastleProvider());
+        }
 
-		//
-		// Create CMS Message
-		//
-		// Create a new empty CMS Message
-		CMSSignedDataGenerator gen = new CMSSignedDataGenerator();
+        signerDN = pCertificate.getSubjectDN().toString();
+        log.info("DN: " + signerDN);
 
-		ContentSigner sha1Signer = new JcaContentSignerBuilder("SHA1withRSA").setProvider("BC").build(pKey);
-		gen.addSignerInfoGenerator(
-				new JcaSignerInfoGeneratorBuilder(new JcaDigestCalculatorProviderBuilder().setProvider("BC").build())
-						.build(sha1Signer, pCertificate));
-		gen.addCertificates(certs);
+        //
+        // Create XML Message
+        //
+        loginTicketRequest_xml = createLoginTicketRequest(signerDN, dstDN, service, ticketTime);
 
-		// the data (XML) to the Message
-		CMSTypedData data = new CMSProcessableByteArray(loginTicketRequest_xml.getBytes());
+        //
+        // Create CMS Message
+        //
+        // Create a new empty CMS Message
+        CMSSignedDataGenerator gen = new CMSSignedDataGenerator();
 
-		CMSSignedData sigData = gen.generate(data, true);
+        ContentSigner sha1Signer = new JcaContentSignerBuilder("SHA1withRSA").setProvider("BC").build(pKey);
+        gen.addSignerInfoGenerator(
+                new JcaSignerInfoGeneratorBuilder(new JcaDigestCalculatorProviderBuilder().setProvider("BC").build())
+                        .build(sha1Signer, pCertificate));
+        gen.addCertificates(certs);
 
-		asn1_cms = sigData.getEncoded();
+        // the data (XML) to the Message
+        CMSTypedData data = new CMSProcessableByteArray(loginTicketRequest_xml.getBytes());
 
-		log.info("Enveloped data: " + asn1_cms.toString());
+        CMSSignedData sigData = gen.generate(data, true);
 
-		return asn1_cms;
-	}
+        asn1_cms = sigData.getEncoded();
 
-	//
-	// Create XML Message for AFIP wsaa
-	//
-	private String createLoginTicketRequest(String SignerDN, String dstDN, String service, int TicketTime)
-			throws DocumentException, IOException {
-		String loginTicketRequest_xml;
-		Date GenTime = new Date();
-		String UniqueId = new Long(GenTime.getTime() / 1000).toString();
+        log.info("Enveloped data: " + Arrays.toString(asn1_cms));
 
-		GregorianCalendar gentime = new GregorianCalendar();
-		XMLGregorianCalendarImpl XMLGenTime = new XMLGregorianCalendarImpl(gentime);
+        return asn1_cms;
+    }
 
-		GregorianCalendar exptime = new GregorianCalendar();
-		exptime.add(GregorianCalendar.SECOND, TicketTime);
-		XMLGregorianCalendarImpl XMLExpTime = new XMLGregorianCalendarImpl(exptime);
+    //
+    // Create XML Message for AFIP wsaa
+    //
+    private String createLoginTicketRequest(String SignerDN, String dstDN, String service, int TicketTime)
+            throws DocumentException, IOException {
+        String loginTicketRequest_xml;
+        Date GenTime = new Date();
+        String UniqueId = Long.toString(GenTime.getTime() / 1000);
 
-		loginTicketRequest_xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
-				+ "<loginTicketRequest version=\"1.0\">" + "<header>" + "<source>" + SignerDN + "</source>"
-				+ "<destination>" + dstDN + "</destination>" + "<uniqueId>" + UniqueId + "</uniqueId>"
-				+ "<generationTime>" + XMLGenTime + "</generationTime>" + "<expirationTime>" + XMLExpTime
-				+ "</expirationTime>" + "</header>" + "<service>" + service + "</service>" + "</loginTicketRequest>";
-		Document document = DocumentHelper.parseText(loginTicketRequest_xml);
+        GregorianCalendar gentime = new GregorianCalendar();
+        XMLGregorianCalendarImpl XMLGenTime = new XMLGregorianCalendarImpl(gentime);
 
-		FileWriter out = new FileWriter("loginTicketRequest.xml");
-		document.write(out);
-		out.close();
+        GregorianCalendar exptime = new GregorianCalendar();
+        exptime.add(GregorianCalendar.SECOND, TicketTime);
+        XMLGregorianCalendarImpl XMLExpTime = new XMLGregorianCalendarImpl(exptime);
 
-		return loginTicketRequest_xml;
-	}
+        loginTicketRequest_xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
+                + "<loginTicketRequest version=\"1.0\">" + "<header>" + "<source>" + SignerDN + "</source>"
+                + "<destination>" + dstDN + "</destination>" + "<uniqueId>" + UniqueId + "</uniqueId>"
+                + "<generationTime>" + XMLGenTime + "</generationTime>" + "<expirationTime>" + XMLExpTime
+                + "</expirationTime>" + "</header>" + "<service>" + service + "</service>" + "</loginTicketRequest>";
+        Document document = DocumentHelper.parseText(loginTicketRequest_xml);
 
-	private void ObtenerCentificadoAfip()
-			throws ServiceException, DocumentException, IOException, ParseException, UnrecoverableKeyException,
-			KeyStoreException, NoSuchAlgorithmException, CertificateException, OperatorCreationException, CMSException,
-			InvalidKeyException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException {
+        try (FileWriter out = new FileWriter("loginTicketRequest.xml")) {
+            document.write(out);
+        }
 
-		String endpoint = Configuracion.HOMOLOCION ? "https://wsaahomo.afip.gov.ar/ws/services/LoginCms" : "";
+        return loginTicketRequest_xml;
+    }
 
-		String dstDN = Configuracion.DSTDN;
+    private void ObtenerCentificadoAfip()
+            throws ServiceException, DocumentException, IOException, ParseException, UnrecoverableKeyException,
+            KeyStoreException, NoSuchAlgorithmException, CertificateException, OperatorCreationException, CMSException,
+            InvalidKeyException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException {
 
-		String p12file = Configuracion.KEYSTORE;
-		String signer = Configuracion.KEYSTORE_USER;
-		String p12pass = Configuracion.KEYSTORE_PASS;
-		int ticketTime = Configuracion.TICKETTIME;
+        String endpoint = Configuracion.HOMOLOCION ? "https://wsaahomo.afip.gov.ar/ws/services/LoginCms" : "";
 
-		loadp12file(p12file, p12pass, signer);
+        String dstDN = Configuracion.DSTDN;
 
-		// Set proxy system vars
-		System.setProperty("http.proxyHost", Configuracion.HTTP_PROXY);
-		System.setProperty("http.proxyPort", Configuracion.HTTP_PROXY_PORT);
-		System.setProperty("http.proxyUser", Configuracion.HTTP_PROXY_USER);
-		System.setProperty("http.proxyPassword", Configuracion.HTTP_PROXY_PASS);
+        String p12file = Configuracion.KEYSTORE;
+        String signer = Configuracion.KEYSTORE_USER;
+        String p12pass = Configuracion.KEYSTORE_PASS;
+        int ticketTime = Configuracion.TICKETTIME;
 
-		// Set the keystore used by SSL
-		/*
+        loadp12file(p12file, p12pass, signer);
+
+        // Set proxy system vars
+        System.setProperty("http.proxyHost", Configuracion.HTTP_PROXY);
+        System.setProperty("http.proxyPort", Configuracion.HTTP_PROXY_PORT);
+        System.setProperty("http.proxyUser", Configuracion.HTTP_PROXY_USER);
+        System.setProperty("http.proxyPassword", Configuracion.HTTP_PROXY_PASS);
+
+        // Set the keystore used by SSL
+        /*
 		 * System.setProperty("javax.net.ssl.trustStore",
 		 * config.getProperty("trustStore", ""));
 		 * System.setProperty("javax.net.ssl.trustStorePassword",
 		 * config.getProperty("trustStore_password", ""));
-		 */
+         */
+        // Create LoginTicketRequest_xml_cms
+        byte[] LoginTicketRequest_xml_cms = create_cms(dstDN, service, ticketTime);
+        // Invoke AFIP wsaa and get LoginTicketResponse
 
-		// Create LoginTicketRequest_xml_cms
-		byte[] LoginTicketRequest_xml_cms = create_cms(dstDN, service, ticketTime);
-		// Invoke AFIP wsaa and get LoginTicketResponse
+        String ticketResponse = invoke_wsaa(LoginTicketRequest_xml_cms, endpoint);
 
-		String ticketResponse = invoke_wsaa(LoginTicketRequest_xml_cms, endpoint);
+        Token.guardar(filename, ticketResponse);
 
-		Token.guardar(filename, ticketResponse);
+        ticketLogin = llenarEntidadTicketResponse(ticketResponse);
 
-		ticketLogin = llenarEntidadTicketResponse(ticketResponse);
+    }
 
-	}
+    private TicketLogin llenarEntidadTicketResponse(String ticketResponse) throws ParseException, DocumentException {
 
-	private TicketLogin llenarEntidadTicketResponse(String ticketResponse) throws ParseException, DocumentException {
+        Document document = DocumentHelper.parseText(ticketResponse);
 
-		Document document = DocumentHelper.parseText(ticketResponse);
+        TicketLogin tl = new TicketLogin();
 
-		TicketLogin ticketLogin = new TicketLogin();
+        tl.setToken(document.valueOf("/loginTicketResponse/credentials/token"));
 
-		ticketLogin.setToken(document.valueOf("/loginTicketResponse/credentials/token"));
+        tl.setSign(document.valueOf("/loginTicketResponse/credentials/sign"));
 
-		ticketLogin.setSign(document.valueOf("/loginTicketResponse/credentials/sign"));
+        String expirationTime = document.valueOf("/loginTicketResponse/header/expirationTime");
 
-		String expirationTime = document.valueOf("/loginTicketResponse/header/expirationTime");
+        String format = "yyyy-MM-dd'T'HH:mm:ss.SSSX";
 
-		String format = "yyyy-MM-dd'T'HH:mm:ss.SSSX";
+        GregorianCalendar cal = new GregorianCalendar();
 
-		GregorianCalendar cal = new GregorianCalendar();
+        cal.setTime(new SimpleDateFormat(format).parse(expirationTime));
 
-		cal.setTime(new SimpleDateFormat(format).parse(expirationTime));
+        tl.setExpirationTime(cal.getTime());
 
-		ticketLogin.setExpirationTime(cal.getTime());
+        return tl;
+    }
 
-		return ticketLogin;
-	}
+    private String invoke_wsaa(byte[] LoginTicketRequest_xml_cms, String endpoint)
+            throws ServiceException, DocumentException, IOException {
 
-	private String invoke_wsaa(byte[] LoginTicketRequest_xml_cms, String endpoint)
-			throws ServiceException, DocumentException, IOException {
+        Service s = new Service();
+        Call call = (Call) s.createCall();
 
-		Service service = new Service();
-		Call call = (Call) service.createCall();
+        //
+        // Prepare the call for the Web service
+        //
+        call.setTargetEndpointAddress(new java.net.URL(endpoint));
+        call.setOperationName("loginCms");
+        call.addParameter("request", XMLType.XSD_STRING, ParameterMode.IN);
+        call.setReturnType(XMLType.XSD_STRING);
 
-		//
-		// Prepare the call for the Web service
-		//
-		call.setTargetEndpointAddress(new java.net.URL(endpoint));
-		call.setOperationName("loginCms");
-		call.addParameter("request", XMLType.XSD_STRING, ParameterMode.IN);
-		call.setReturnType(XMLType.XSD_STRING);
-
-		//
-		// Make the actual call and assign the answer to a String
-		//
-		String loginTicketResponse = (String) call.invoke(new Object[] { Base64.encode(LoginTicketRequest_xml_cms) });
-		// LoginTicketResponse = (String) call.invoke(new Object[] {
-		// LoginTicketRequest_xml_cms });
-		/*
+        //
+        // Make the actual call and assign the answer to a String
+        //
+        String loginTicketResponse = (String) call.invoke(new Object[]{Base64.encode(LoginTicketRequest_xml_cms)});
+        // LoginTicketResponse = (String) call.invoke(new Object[] {
+        // LoginTicketRequest_xml_cms });
+        /*
 		 * Document document = DocumentHelper.parseText(loginTicketResponse);
 		 * 
 		 * return document;
-		 */
+         */
 
-		return loginTicketResponse;
-	}
+        return loginTicketResponse;
+    }
 
-	private void buscarTicketAlmacenado()
-			throws DocumentException, ParseException, IOException, NoSuchAlgorithmException, NoSuchPaddingException,
-			InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-		ticketLogin = null;
-		String texto;
-		texto = Token.leer(filename);
+    private void buscarTicketAlmacenado()
+            throws DocumentException, ParseException, IOException, NoSuchAlgorithmException, NoSuchPaddingException,
+            InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+        ticketLogin = null;
+        String texto;
+        texto = Token.leer(filename);
 
-		if (texto != null) {
-			ticketLogin = llenarEntidadTicketResponse(texto);
-		} else {
-			ticketLogin = null;
-		}
-	}
+        if (texto != null) {
+            ticketLogin = llenarEntidadTicketResponse(texto);
+        } else {
+            ticketLogin = null;
+        }
+    }
 
-	/*
+    /*
 	 * 
 	 * 
 	 * 
@@ -427,5 +426,5 @@ public class Wsaa {
 	 * System.out.println(tickelogin);
 	 * 
 	 * }
-	 */
+     */
 }

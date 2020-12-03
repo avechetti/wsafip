@@ -7,14 +7,18 @@
 
 package coop.guenoa.afip.wsfev1;
 
+import java.net.URL;
+
+import javax.xml.rpc.ServiceException;
+
 public interface IService extends javax.xml.rpc.Service {
 
 	/**
 	 * Web Service orientado al servicio de Facturacion electronica RG2485 V1
 	 */
-	public java.lang.String getServiceSoapAddress();
+	public String getServiceSoapAddress();
 
-	public coop.guenoa.afip.wsfev1.IServiceWsfeV1 getServiceSoap() throws javax.xml.rpc.ServiceException;
+	public IServiceWsfeV1 getServiceSoap() throws ServiceException;
 
-	public coop.guenoa.afip.wsfev1.IServiceWsfeV1 getServiceSoap(java.net.URL portAddress) throws javax.xml.rpc.ServiceException;
+	public IServiceWsfeV1 getServiceSoap(URL portAddress) throws ServiceException;
 }

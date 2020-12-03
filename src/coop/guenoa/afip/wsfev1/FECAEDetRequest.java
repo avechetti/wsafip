@@ -8,14 +8,20 @@
 package coop.guenoa.afip.wsfev1;
 
 public class FECAEDetRequest extends coop.guenoa.afip.wsfev1.FEDetRequest implements java.io.Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public FECAEDetRequest() {
 	}
 
 	public FECAEDetRequest(int concepto, int docTipo, long docNro, long cbteDesde, long cbteHasta,
 			java.lang.String cbteFch, double impTotal, double impTotConc, double impNeto, double impOpEx,
 			double impTrib, double impIVA, java.lang.String fchServDesde, java.lang.String fchServHasta,
-			java.lang.String fchVtoPago, java.lang.String monId, double monCotiz, coop.guenoa.afip.wsfev1.CbteAsoc[] cbtesAsoc,
-			coop.guenoa.afip.wsfev1.Tributo[] tributos, coop.guenoa.afip.wsfev1.AlicIva[] iva, coop.guenoa.afip.wsfev1.Opcional[] opcionales) {
+			java.lang.String fchVtoPago, java.lang.String monId, double monCotiz,
+			coop.guenoa.afip.wsfev1.CbteAsoc[] cbtesAsoc, coop.guenoa.afip.wsfev1.Tributo[] tributos,
+			coop.guenoa.afip.wsfev1.AlicIva[] iva, coop.guenoa.afip.wsfev1.Opcional[] opcionales) {
 		super(concepto, docTipo, docNro, cbteDesde, cbteHasta, cbteFch, impTotal, impTotConc, impNeto, impOpEx, impTrib,
 				impIVA, fchServDesde, fchServHasta, fchVtoPago, monId, monCotiz, cbtesAsoc, tributos, iva, opcionales);
 	}
@@ -25,9 +31,6 @@ public class FECAEDetRequest extends coop.guenoa.afip.wsfev1.FEDetRequest implem
 	@Override
 	public synchronized boolean equals(java.lang.Object obj) {
 		if (!(obj instanceof FECAEDetRequest))
-			return false;
-		FECAEDetRequest other = (FECAEDetRequest) obj;
-		if (obj == null)
 			return false;
 		if (this == obj)
 			return true;

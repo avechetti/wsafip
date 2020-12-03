@@ -19,7 +19,7 @@ import coop.guenoa.afip.wsfev1.FECAEDetResponse;
 import coop.guenoa.afip.wsfev1.FECAERequest;
 import coop.guenoa.afip.wsfev1.FECAEResponse;
 import coop.guenoa.afip.wsfev1.Opcional;
-import coop.guenoa.afip.wsfev1.Wsfe_v1;
+import coop.guenoa.afip.wsfev1.Wsfev1;
 import coop.guenoa.afip.wsfev1.WsFev1Execepcion;
 
 public class test_wsfev1_SolicitarCaeFactCred {
@@ -28,7 +28,7 @@ public class test_wsfev1_SolicitarCaeFactCred {
 
 		Debug.debug = true;
 
-		Wsfe_v1 wsfev1 = new Wsfe_v1(true);
+		Wsfev1 wsfev1 = new Wsfev1(true);
 
 		DummyResponse response;
 		try {
