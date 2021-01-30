@@ -26,22 +26,20 @@ public class test_persona_A4 {
 			TicketLogin tl = null;
 
 			Wsaa wsaa = new Wsaa(Wsaa.ws_sr_padron_a4);
-			
+
 			tl = wsaa.getTicketLogin();
 
-			PersonaReturn personaReturn = personaService.getPersona(tl.getToken(), tl.getSign(), Long.valueOf(Configuracion.CUIT),
-					Long.valueOf("20187986843"));
+			PersonaReturn personaReturn = personaService.getPersona(tl.getToken(), tl.getSign(),
+					Long.valueOf(Configuracion.CUIT), Long.valueOf("20002195624"));
 
-			Persona persona  = personaReturn.getPersona();
-			
+			Persona persona = personaReturn.getPersona();
+
 			System.out.println(persona.toString());
-			
+
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		} catch (WsaaException e) {
 			e.printStackTrace();
 		}
-
 	}
-
 }

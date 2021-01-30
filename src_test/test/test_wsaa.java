@@ -13,9 +13,6 @@ public class test_wsaa {
 		System.setProperty("http.proxyPort", "80");
 
 		Configuracion.readProperty();
-		
-		
-		
 
 		Wsaa wsaa = new Wsaa("wsfe");
 		
@@ -23,12 +20,10 @@ public class test_wsaa {
 		try {
 			ticketResponse = wsaa.getTicketLogin();
 		} catch (WsaaException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		String token = ticketResponse.getToken();
-
 		String sign = ticketResponse.getSign();
 		
 		ticketResponse.esVigente();
@@ -36,5 +31,4 @@ public class test_wsaa {
 		System.out.println("TOKEN: " + token);
 		System.out.println("SIGN: " + sign);
 	}
-
 }
